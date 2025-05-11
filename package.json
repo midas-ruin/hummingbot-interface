@@ -1,1 +1,39 @@
-{\n  \"name\": \"hummingbot-interface\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"next lint\"\n  },\n  \"dependencies\": {\n    \"next\": \"^13.4.19\",\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"tailwindcss\": \"^3.3.3\",\n    \"postcss\": \"^8.4.29\",\n    \"autoprefixer\": \"^10.4.15\"\n  },\n  \"devDependencies\": {\n    \"@types/node\": \"^20.5.7\",\n    \"@types/react\": \"^18.2.21\",\n    \"@types/react-dom\": \"^18.2.7\",\n    \"typescript\": \"^5.2.2\",\n    \"eslint\": \"^8.48.0\",\n    \"eslint-config-next\": \"^13.4.19\"\n  }\n}
+{
+  "name": "hummingbot-interface",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next start"
+  },
+  "babelMacros": {
+    "twin": {
+      "preset": "styled-components"
+    }
+  },
+  "dependencies": {
+    "@babel/core": "^7.20.12",
+    "@hummingbot/hbui": "^1.5.2",
+    "next": "^13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "5.3.6",
+    "postcss": "^8.4.29",
+    "autoprefixer": "^10.4.15"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-typescript": "^7.20.0",
+    "@types/node": "^20.5.7",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "babel-loader": "^9.1.0",
+    "babel-plugin-macros": "^3.1.0",
+    "tailwindcss": "^3.2.4",
+    "twin.macro": "^3.1.0",
+    "typescript": "^5.2.2",
+    "eslint": "^8.48.0",
+    "eslint-config-next": "^13.4.19"
+  }
+}
