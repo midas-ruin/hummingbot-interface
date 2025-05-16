@@ -255,7 +255,220 @@ const Container = styled.div`
 interface LayoutProps {
   children: React.ReactNode;
 }
+import React from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { usePrivy } from '@privy-io/react-auth';
+import { ThemeToggle } from './ThemeToggle';
+import { useTheme } from '@/providers/ThemeProvider';
+import { Button } from './ui/button';
+import { cn } from '@/lib/utils';
 
+interface LayoutProps {
+  children: React.ReactNode;
+  title?: string;
+  description?: string;
+  className?: string;
+  showHeader?: boolean;
+  showFooter?: boolean;
+}
+
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  title = 'Hummingbot Interface',
+  description = 'Manage and assess your Hummingbot trading bots',
+  className = '',
+  showHeader = true,
+  showFooter = true,
+}) => {
+  const router = useRouter();
+  const { ready, authenticated, user, logout } = usePrivy();
+  const { accessibilitySettings, updateAccessibility } = useTheme();
+  
+  const isActive = (path: string) => router.pathname === path;
+  
+  const handleA11yChange = (setting: keyof typeof accessibilitySettings) => {
+    updateAccessibility({
+      [setting]: !accessibilitySettings[setting as keyof typeof accessibilitySettings],
+    });
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      
+      {/* Skip to content link for keyboard users */}
+      <a 
+        href="#main-content" 
+        className="sr-only sr-only-focusable bg-primary text-primary-foreground px-4 py-2 absolute z-50"
+      >
+        Skip to content
+      </a>
+      
+      {showHeader && (
+        <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-40">
+          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/" aria-label="Hummingbot Interface Home" className="logo-animate">
+                <div className="flex items-center space-x-2">
+                  <span className="font-bold text-lg gradient-text">Hummingbot</span>
+                  <span className="text-muted-foreground">Interface</span>
+                </div>
+              </Link>
+              
+              <nav className="hidden md:flex ml-8 space-x-4" aria-label="Main Navigation">
+                <Link 
+                  href="/" 
+                  className={cn(
+                    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    isActive('/') 
+                      ? "text-primary bg-primary/10" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                  )}
+                  aria-current={isActive('/') ? 'page' : undefined}
+                >
+                  Home
+                </Link>
+                
+                {authenticated && (
+                  <Link 
+                    href="/dashboard" 
+                    className={cn(
+                      "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                      isActive('/dashboard') 
+                        ? "text-primary bg-primary/10" 
+                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    )}
+                    aria-current={isActive('/dashboard') ? 'page' : undefined}
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                
+                <Link 
+                  href="/about" 
+                  className={cn(
+                    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    isActive('/about') 
+                      ? "text-primary bg-primary/10" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                  )}
+                  aria-current={isActive('/about') ? 'page' : undefined}
+                >
+                  About
+                </Link>
+              </nav>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <ThemeToggle className="mr-2" />
+              
+              {ready && authenticated ? (
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => logout()}
+                  aria-label="Sign out"
+                >
+                  Sign Out
+                </Button>
+              ) : (
+                <Button
+                  variant="hbot"
+                  size="sm"
+                  onClick={() => router.push('/login')}
+                  aria-label="Sign in"
+                  className="gsap-reveal"
+                >
+                  Sign In
+                </Button>
+              )}
+            </div>
+          </div>
+        </header>
+      )}
+      
+      <main id="main-content" className={cn("flex-grow", className)}>
+        {children}
+      </main>
+      
+      {showFooter && (
+        <footer className="border-t border-border bg-card py-6">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="mb-4 md:mb-0">
+                <p className="text-sm text-muted-foreground">
+                  © {new Date().getFullYear()} Hummingbot Interface. All rights reserved.
+                </p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-muted-foreground">Accessibility:</span>
+                  <button
+                    onClick={() => handleA11yChange('highContrast')}
+                    className={cn(
+                      "text-xs px-2 py-1 rounded-md",
+                      accessibilitySettings.highContrast 
+                        ? "bg-primary text-primary-foreground" 
+                        : "bg-secondary text-secondary-foreground"
+                    )}
+                    aria-pressed={accessibilitySettings.highContrast}
+                  >
+                    High Contrast
+                  </button>
+                  
+                  <button
+                    onClick={() => handleA11yChange('largeText')}
+                    className={cn(
+                      "text-xs px-2 py-1 rounded-md",
+                      accessibilitySettings.largeText 
+                        ? "bg-primary text-primary-foreground" 
+                        : "bg-secondary text-secondary-foreground"
+                    )}
+                    aria-pressed={accessibilitySettings.largeText}
+                  >
+                    Large Text
+                  </button>
+                  
+                  <button
+                    onClick={() => handleA11yChange('reducedMotion')}
+                    className={cn(
+                      "text-xs px-2 py-1 rounded-md",
+                      accessibilitySettings.reducedMotion 
+                        ? "bg-primary text-primary-foreground" 
+                        : "bg-secondary text-secondary-foreground"
+                    )}
+                    aria-pressed={accessibilitySettings.reducedMotion}
+                  >
+                    Reduced Motion
+                  </button>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+                    Privacy
+                  </Link>
+                  <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+                    Terms
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      )}
+    </div>
+  );
+};
+
+export default Layout;
 export default function Layout({ children }: LayoutProps) {
   return (
     <>

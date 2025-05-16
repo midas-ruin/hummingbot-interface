@@ -11,6 +11,25 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+* Truncates an Ethereum address or other long string for display
+* 
+* @param address The full address or string to truncate
+* @param prefixLength Number of characters to show at the beginning
+* @param suffixLength Number of characters to show at the end
+* @returns Truncated address with ellipsis in the middle
+*/
+export function truncateAddress(
+ address: string, 
+ prefixLength: number = 6, 
+ suffixLength: number = 4
+): string {
+ if (!address) return '';
+ if (address.length <= prefixLength + suffixLength) return address;
+ 
+ return `${address.substring(0, prefixLength)}...${address.substring(address.length - suffixLength)}`;
+}
+
+/**
  * Formats a number to a currency string
  * @param value - number to format
  * @param currency - currency code (default USD)

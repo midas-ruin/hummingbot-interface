@@ -23,12 +23,17 @@ const buttonVariants = cva(
         hbotGreen: "bg-[hsl(var(--hbot-green))] text-white hover:bg-[hsl(var(--hbot-green))/90]",
         hbotPurple: "bg-[hsl(var(--hbot-purple))] text-white hover:bg-[hsl(var(--hbot-purple))/90]",
         glassy: "bg-white/10 backdrop-blur-lg border border-white/20 text-foreground hover:bg-white/20",
+        // Hummingbot green theme button
+        hbot: "bg-[hsl(var(--hbot-green))] text-white hover:bg-[hsl(var(--hbot-green))]/90 dark:bg-[hsl(var(--hbot-green))] dark:text-white dark:hover:bg-[hsl(var(--hbot-green))]/90",
+        // Hummingbot blue theme button
+        hbotBlue: "bg-[hsl(var(--hbot-blue))] text-white hover:bg-[hsl(var(--hbot-blue))]/90 dark:bg-[hsl(var(--hbot-blue))] dark:text-white dark:hover:bg-[hsl(var(--hbot-blue))]/90",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        lg: "h-11 rounded-md px-8 text-base",
         icon: "h-10 w-10",
+        xs: "h-8 rounded-md px-2.5 text-xs",
       },
     },
     defaultVariants: {

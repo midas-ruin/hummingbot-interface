@@ -6,6 +6,7 @@ const includedDirs = [
   path.resolve(__dirname, 'pages'),
   path.resolve(__dirname, 'ui'),
   path.resolve(__dirname, 'system'),
+  path.resolve(__dirname, 'app'), // Add app directory for App Router
 ]
 
 module.exports = function withTwin(nextConfig) {

@@ -2,12 +2,179 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 243, 244, 246;
-  --primary-color: #02C77A;
-  --secondary-color: #F0B90B;
-  --text-color: #1F2937;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+    
+    /* Hummingbot specific colors */
+    --hbot-green: 159 98% 39%;
+    --hbot-blue: 213 92% 45%;
+    --hbot-warning: 45 93% 47%;
+    --hbot-error: 0 91% 63%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 6.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 6.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 42.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  .oled {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 3%;
+    --muted: 0 0% 12%;
+    --border: 0 0% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom Hummingbot components */
+@layer components {
+  .shimmer {
+    @apply relative overflow-hidden bg-gray-200 dark:bg-gray-800;
+  }
+  
+  .shimmer::after {
+    @apply absolute top-0 left-[-100%] right-0 bottom-0;
+    content: '';
+    background: linear-gradient(to right, 
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+  }
+  
+  @keyframes shimmer {
+    to {
+      transform: translateX(200%);
+    }
+  }
+  
+  .animate-in {
+    animation-duration: 150ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: forwards;
+  }
+  
+  .fade-in-5 {
+    animation-duration: 150ms;
+    animation-name: fadeIn;
+  }
+  
+  .slide-in-from-top-1 {
+    animation-name: slideInFromTop;
+    animation-duration: 150ms;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideInFromTop {
+    from { 
+      opacity: 0;
+      transform: translateY(-0.25rem);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Button variants for Hummingbot */
+.btn-hbot {
+  @apply bg-[hsl(var(--hbot-green))] text-white hover:bg-[hsl(var(--hbot-green))]/90 
+  focus-visible:outline-[hsl(var(--hbot-green))];
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Toast styling */
+.Toastify__toast {
+  @apply rounded-md shadow-lg;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  @apply bg-[hsl(var(--hbot-green))];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  @apply bg-[hsl(var(--hbot-error))];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info {
+  @apply bg-[hsl(var(--hbot-blue))];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--warning {
+  @apply bg-[hsl(var(--hbot-warning))];
+  @apply text-gray-900;
+}
   --border-color: #E5E7EB;
 }
 
