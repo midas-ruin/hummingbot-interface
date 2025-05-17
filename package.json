@@ -1,1 +1,71 @@
-{\n  \"name\": \"hummingbot-interface\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"next lint\"\n  },\n  \"dependencies\": {\n    \"next\": \"^13.4.19\",\n    \"react\": \"^18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"tailwindcss\": \"^3.3.3\",\n    \"postcss\": \"^8.4.29\",\n    \"autoprefixer\": \"^10.4.15\"\n  },\n  \"devDependencies\": {\n    \"@types/node\": \"^20.5.7\",\n    \"@types/react\": \"^18.2.21\",\n    \"@types/react-dom\": \"^18.2.7\",\n    \"typescript\": \"^5.2.2\",\n    \"eslint\": \"^8.48.0\",\n    \"eslint-config-next\": \"^13.4.19\"\n  }\n}
+{
+  "name": "hummingbot-interface",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3005",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "babelMacros": {
+    "twin": {
+      "preset": "styled-components"
+    }
+  },
+  "dependencies": {
+    "@privy-io/react-auth": "^1.44.1",
+    "@privy-io/server-auth": "^1.22.0",
+    "@hummingbot/hbui": "^1.5.2",
+    "@next/swc-win32-x64-msvc": "^15.3.2",
+    "@privy-io/react-auth": "^2.13.1",
+    "@solana/web3.js": "^1.98.2",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.1",
+    "@types/redis": "^4.0.10",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "next": "^15.3.2",
+    "next-client-cookies": "^1.1.0",
+    "react": "^18.2.0",
+    "react-confirm-alert": "^3.0.6",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.56.3",
+    "react-is": "^19.1.0",
+    "react-toastify": "^11.0.5",
+    "redis": "^5.0.1",
+    "styled-components": "^6.1.0",
+    "tailwindcss": "^3.3.0",
+    "viem": "^2.29.2",
+    "ws": "^8.18.2",
+    "zustand": "^5.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-syntax-typescript": "^7.20.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.5.7",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@types/styled-components": "^5.1.26",
+    "@types/ws": "^8.18.1",
+    "autoprefixer": "^10.4.15",
+    "babel-loader": "^9.1.0",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-styled-components": "^2.1.1",
+    "eslint": "^8.48.0",
+    "eslint-config-next": "^13.4.19",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8.4.29",
+    "tailwindcss": "^3.3.0",
+    "twin.macro": "^3.1.0",
+    "typescript": "^5.2.2"
+  }
+}
